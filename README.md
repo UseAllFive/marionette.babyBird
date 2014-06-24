@@ -19,9 +19,10 @@ This module requires [Backbone](http://backbonejs.org), [Marionette](http://mari
 ## Limitations
 There is no checking done to catch circular dependencies.
 
-## Updating Annotated Source Code
-To update the annotated source code, you must install Pygments on your system
-as it is a dependency of [groc](https://github.com/nevir/groc).
+## Annotated Source Code
+To generate annotated source code, run `grunt groc:local`.
+
+You must install Pygments on your system as it is a dependency of [groc](https://github.com/nevir/groc):
 
 ```
 pip install Pygments
