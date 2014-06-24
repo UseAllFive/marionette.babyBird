@@ -4,9 +4,9 @@ var module;
 
 config = {
     files: {
-        build: 'src/marionette.babyBird.js',
+        build: 'lib/marionette.babyBird.js',
         check: [
-            'src/marionette.babyBird.js',
+            'lib/marionette.babyBird.js',
             'Gruntfie.js'
         ],
         dest: 'dist/marionette.babyBird.min.js',
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
         groc: {
             options: {
                 out: config.files.docs,
-                strip: 'src/'
+                strip: 'lib/'
             },
             all: {
                 src: config.files.build
