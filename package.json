@@ -1,6 +1,6 @@
 {
   "name": "marionette.babyBird",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Recursively run toJSON on deeply nested models/collections for Marionette views to provide a plain JavaScript object to templates.",
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "grunt-groc": "^0.4.5",
     "grunt-jscs-checker": "^0.6.0",
     "jshint": "^2.5.1",
-    "matchdep": "^0.3.0"
+    "matchdep": "^0.3.0",
+    "use-all-five-jscs-rules": "git://github.com/UseAllFive/use-all-five-jscs-rules.git#v0.0.2"
   }
 }
