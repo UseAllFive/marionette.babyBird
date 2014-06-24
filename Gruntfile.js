@@ -22,6 +22,11 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: pkg,
 
+        clean: {
+            dist: 'dist',
+            docs: 'docs'
+        },
+
         jshint: {
             options: {
                 jshintrc: true
@@ -46,7 +51,7 @@ module.exports = function(grunt) {
                 out: config.files.docs,
                 strip: 'lib/'
             },
-            all: {
+            local: {
                 src: config.files.build
             },
             github: {
@@ -70,7 +75,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: config.files.check,
-                tasks: ['uglify']
+                tasks: ['clean', 'uglify', 'groc:local']
             }
         }
     });
@@ -80,8 +85,10 @@ module.exports = function(grunt) {
 
     // Register tasks.
     defaultTasks = [
+        'clean',
         'jshint',
         'jscs',
+        'groc:local',
         'uglify'
     ];
     grunt.registerTask('default', defaultTasks);
