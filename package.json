@@ -1,6 +1,6 @@
 {
   "name": "marionette.babyBird",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Recursively run toJSON on deeply nested models/collections for Marionette views to provide a plain JavaScript object to templates.",
   "repository": {
     "type": "git",
