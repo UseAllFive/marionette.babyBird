@@ -20,10 +20,10 @@
     "requireBlocksOnNewline": true,
     "requireCommaBeforeLineBreak": true,
     "requireParenthesesAroundIIFE": true,
-    "requireSpaceAfterBinaryOperators": [",", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", "||", "&&"],
+    "requireSpaceAfterBinaryOperators": [",", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", "||", "&&", "+=", "-="],
     "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
     "requireSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "~"],
-    "requireSpaceBeforeBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!==", "||", "&&"],
+    "requireSpaceBeforeBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!==", "||", "&&", "+=", "-="],
     "requireSpaceBeforeBlockStatements": true,
     "requireSpacesInFunctionExpression": {
         "beforeOpeningCurlyBrace": true
