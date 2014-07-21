@@ -123,7 +123,8 @@ module.exports = function(grunt) {
             },
             github: {
                 options: {
-                    github: true
+                    github: true,
+                    'repository-url': endpoint
                 },
                 src: config.files.build
             }
