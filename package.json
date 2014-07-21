@@ -14,6 +14,8 @@
   "homepage": "https://github.com/UseAllFive/marionette.babyBird",
   "devDependencies": {
     "grunt": "^0.4.5",
+    "grunt-bower-release": "0.0.5",
+    "grunt-bump": "0.0.14",
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-requirejs": "^0.4.4",
@@ -21,8 +23,10 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-groc": "^0.4.5",
     "grunt-jscs-checker": "^0.6.0",
+    "grunt-prompt": "^1.1.0",
     "jshint": "^2.5.1",
     "matchdep": "^0.3.0",
+    "semver": "^2.3.1",
     "underscore.string": "^2.3.3",
     "use-all-five-jscs-rules": "git://github.com/UseAllFive/use-all-five-jscs-rules.git#v0.0.2"
   }

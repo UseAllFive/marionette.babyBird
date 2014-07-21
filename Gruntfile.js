@@ -15,12 +15,45 @@ config = {
 };
 
 module.exports = function(grunt) {
-
-    var pkg = grunt.file.readJSON('package.json');
     var defaultTasks;
+    var endpoint = grunt.file.readJSON('bower.json').repository.url;
+    var pkg = grunt.file.readJSON('package.json');
 
     grunt.initConfig({
         pkg: pkg,
+        semver: require('semver'),
+
+        bowerRelease: {
+            options: {
+                endpoint: endpoint
+            },
+            deploy: {
+                files: [{
+                    expand: true,
+                    cwd: './',
+                    src: [
+                        'lib/**/*',
+                        'dist/**/*',
+                        '.*'
+                    ]
+                }]
+            }
+        },
+
+        bump: {
+            options: {
+                commitFiles: [
+                    'package.json',
+                    'bower.json'
+                ],
+                files: [
+                    'package.json',
+                    'bower.json'
+                ],
+                pushTo: 'origin',
+                updateConfigs: ['pkg']
+            }
+        },
 
         clean: {
             dist: 'dist',
@@ -42,6 +75,40 @@ module.exports = function(grunt) {
             all: {
                 files: {
                     src: config.files.check
+                }
+            }
+        },
+
+        prompt: {
+            bump: {
+                options: {
+                    questions: [
+                        {
+                            config: 'bump.increment',
+                            type: 'list',
+                            message: 'Bump version from ' + pkg.version.cyan + ' to:',
+                            choices: [
+                                {
+                                    value: 'patch',
+                                    name: 'Patch:  '.yellow +
+                                        '<%= semver.inc(pkg.version, "patch") %>'.yellow +
+                                        '   Backwards-compatible bug fixes.'
+                                },
+                                {
+                                    value: 'minor',
+                                    name: 'Minor:  '.yellow +
+                                        '<%= semver.inc(pkg.version, "minor") %>'.yellow +
+                                        '   Add functionality in a backwards-compatible manner.'
+                                },
+                                {
+                                    value: 'major',
+                                    name: 'Major:  '.yellow +
+                                        '<%= semver.inc(pkg.version, "major") %>'.yellow +
+                                        '   Incompatible API changes.'
+                                }
+                            ]
+                        }
+                    ]
                 }
             }
         },
@@ -93,4 +160,20 @@ module.exports = function(grunt) {
     ];
     grunt.registerTask('default', defaultTasks);
     grunt.registerTask('dev', defaultTasks.concat('watch'));
+    grunt.registerTask('publish',
+        'Minify, bump, and release to bower',
+        ['jshint', 'jscs', 'uglify', 'prompt:bump', 'bump:prompt', 'bowerRelease']
+    );
+
+     /**
+     * Internal task to use the prompt settings to create a tag
+     */
+    grunt.registerTask('bump:prompt', function() {
+        var increment = grunt.config('bump.increment');
+        if (!increment) {
+            grunt.fatal('bump.increment config not set!');
+        }
+
+        grunt.task.run('bump:' + increment);
+    });
 };

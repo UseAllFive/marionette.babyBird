@@ -1,0 +1,34 @@
+{
+  "name": "marionette.babyBird",
+  "version": "0.3.0",
+  "homepage": "https://github.com/UseAllFive/marionette.babyBird",
+  "authors": [
+    "Justin Anastos <janastos@useallfive.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/UseAllFive/marionette.babyBird.git"
+  },
+  "description": "Flatten deeply nested Backbone models and collections into a plain JavaScript object when using built-in Marionette.Renderer.",
+  "main": "lib/marionette.babyBird.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "backbone",
+    "collection",
+    "marionette",
+    "model",
+    "render",
+    "toJSON"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "docs",
+    "node_modules",
+    "test",
+    "tests"
+  ]
+}
