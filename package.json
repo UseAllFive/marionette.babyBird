@@ -27,7 +27,7 @@
     "jshint": "^2.5.1",
     "matchdep": "^0.3.0",
     "semver": "^2.3.1",
-    "underscore.string": "^2.3.3",
-    "use-all-five-jscs-rules": "git://github.com/UseAllFive/use-all-five-jscs-rules.git#v0.0.2"
+    "ua5-frontend-standards": "0.0.4",
+    "underscore.string": "^2.3.3"
   }
 }

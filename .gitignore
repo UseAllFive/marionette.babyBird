@@ -1,2 +1,8 @@
-/node_modules
+.editorconfig
+.jscsrc
+.jshintignore
+.jshintrc
+.npmignore
+.scss-lint.yml
 /docs
+/node_modules
