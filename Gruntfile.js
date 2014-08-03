@@ -9,7 +9,7 @@ config = {
             'lib/marionette.babyBird.js',
             'Gruntfie.js'
         ],
-        dest: 'dist/marionette.babyBird.min.js',
+        dist: 'dist/marionette.babyBird.min.js',
         docs: 'docs'
     }
 };
@@ -133,7 +133,7 @@ module.exports = function(grunt) {
         uglify: {
             all: {
                 src: config.files.build,
-                dest: config.files.dest
+                dest: config.files.dist
             }
         },
 
