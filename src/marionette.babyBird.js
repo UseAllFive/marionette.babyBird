@@ -1,18 +1,3 @@
-/* # marionette.babyBird
-
-Brought to you by [Use All Five, Inc.](http://www.useallfive.com)
-
-```
-Author: Justin Anastos <janastos@useallfive.com>
-Author URI: [http://www.useallfive.com](http://www.useallfive.com)
-Repository: https://github.com/UseAllFive/marionette.babyBird
-```
-
-Recursively run toJSON on deeply nested models/collections for Marionette
-views to provide a plain JavaScript object to templates.
-
-*/
-
 // ## Factory
 // Be compatible with requirejs.
 (function(factory) {
