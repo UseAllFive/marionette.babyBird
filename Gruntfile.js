@@ -6,7 +6,7 @@ config = {
     files: {
         build: 'lib/marionette.babyBird.js',
         check: [
-            'lib/marionette.babyBird.js',
+            'src/marionette.babyBird.js',
             'Gruntfie.js'
         ],
         dist: 'dist/marionette.babyBird.min.js',
@@ -63,12 +63,15 @@ module.exports = function(grunt) {
             options: {
                 commitFiles: [
                     'package.json',
-                    'bower.json'
+                    'bower.json',
+                    config.files.build,
+                    config.files.dist
                 ],
                 files: [
                     'package.json',
                     'bower.json'
                 ],
+                push: true,
                 pushTo: 'origin',
                 updateConfigs: ['pkg']
             }
@@ -196,6 +199,19 @@ module.exports = function(grunt) {
                 tasks: 'local:publish'
             }
         }
+    });
+
+     /**
+     * Internal task to use the prompt settings to create a tag
+     */
+    grunt.registerTask('bump:prompt', function() {
+        var increment = grunt.config('bump.increment');
+
+        if (!increment) {
+            grunt.fatal('bump.increment config not set!');
+        }
+
+        grunt.task.run('bump:' + increment);
     });
 
     // Load all npm dependencies.
