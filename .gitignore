@@ -6,3 +6,4 @@
 .scss-lint.yml
 /docs
 /node_modules
+/tmp

@@ -10,12 +10,13 @@ config = {
             'Gruntfie.js'
         ],
         dist: 'dist/marionette.babyBird.min.js',
-        docs: 'docs'
+        docs: 'docs',
+        src: 'src/marionette.babyBird.js',
+        tmp: 'tmp/marionette.babyBird.js'
     }
 };
 
 module.exports = function(grunt) {
-    var defaultTasks;
     var endpoint = grunt.file.readJSON('bower.json').repository.url;
     var pkg = grunt.file.readJSON('package.json');
 
@@ -40,6 +41,24 @@ module.exports = function(grunt) {
             }
         },
 
+        meta: {
+            bundleBanner:
+                '// marionette.babyBird\n' +
+                '// -------------------\n' +
+                '// v<%= semver.inc(pkg.version, grunt.config("bump.increment")) %>\n' +
+                '//\n' +
+                '// Annotated source code can be found here: http://useallfive.github.io/marionette.babyBird/marionette.babyBird.html\n' +
+                '//\n' +
+                '// Brought to you by [Use All Five, Inc.](http://www.useallfive.com)\n' +
+                '// ```\n' +
+                '// Author: Justin Anastos <janastos@useallfive.com>\n' +
+                '// Author URI: [http://www.useallfive.com](http://www.useallfive.com)\n' +
+                '// Repository: https://github.com/UseAllFive/marionette.babyBird\n' +
+                '// ```\n' +
+                '// Flatten deeply nested Backbone models and collections into a plain JavaScript object when using built-in Marionette.Renderer.\n' +
+                '\n\n'
+        },
+
         bump: {
             options: {
                 commitFiles: [
@@ -57,7 +76,18 @@ module.exports = function(grunt) {
 
         clean: {
             dist: 'dist',
-            docs: 'docs'
+            lib: 'lib',
+            tmp: 'tmp'
+        },
+
+        concat: {
+            options: {
+                banner: '<%= meta.bundleBanner %>'
+            },
+            bundle: {
+                src: '<%= preprocess.bundle.dest %>',
+                dest: config.files.build
+            }
         },
 
         jshint: {
@@ -115,18 +145,38 @@ module.exports = function(grunt) {
 
         groc: {
             options: {
+                github: false,
                 out: config.files.docs,
-                strip: 'lib/'
+                silent: true,
+                strip: 'src/'
             },
             local: {
-                src: config.files.build
+                src: config.files.src
             },
             github: {
                 options: {
-                    github: true,
-                    'repository-url': endpoint
+                    github: true
                 },
-                src: config.files.build
+                src: config.files.src
+            }
+        },
+
+        preprocess: {
+            bundle: {
+                src: config.files.src,
+                dest: config.files.tmp
+            }
+        },
+
+        template: {
+            options: {
+                data: {
+                    version: '<%= pkg.version %>'
+                }
+            },
+            bundle: {
+                src: '<%= preprocess.bundle.dest %>',
+                dest: '<%= preprocess.bundle.dest %>'
             }
         },
 
@@ -143,7 +193,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: config.files.check,
-                tasks: ['clean', 'uglify', 'groc:local']
+                tasks: 'local:publish'
             }
         }
     });
@@ -151,30 +201,26 @@ module.exports = function(grunt) {
     // Load all npm dependencies.
     matchdep.filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-    // Register tasks.
-    defaultTasks = [
-        'clean',
+    grunt.registerTask('default', 'local:publish');
+    grunt.registerTask('dev', ['local:publish', 'watch']);
+    grunt.registerTask('publish', 'Pack up all the files into a single file, minify, and publish to bower.', [
         'jshint',
         'jscs',
-        'groc:local',
+        'prompt:bump',
+        'clean:lib',
+        'clean:tmp',
+        'preprocess',
+        'concat',
+        'uglify',
+        'bump:prompt',
+        'bowerRelease',
+        'groc:github'
+    ]);
+    grunt.registerTask('local:publish', 'Pack files up into a locally testable version. Same as publish, but without the actual bumping and publishing.', [
+        'clean:lib',
+        'clean:tmp',
+        'preprocess',
+        'concat',
         'uglify'
-    ];
-    grunt.registerTask('default', defaultTasks);
-    grunt.registerTask('dev', defaultTasks.concat('watch'));
-    grunt.registerTask('publish',
-        'Minify, bump, and release to bower',
-        ['jshint', 'jscs', 'uglify', 'prompt:bump', 'bump:prompt', 'bowerRelease']
-    );
-
-     /**
-     * Internal task to use the prompt settings to create a tag
-     */
-    grunt.registerTask('bump:prompt', function() {
-        var increment = grunt.config('bump.increment');
-        if (!increment) {
-            grunt.fatal('bump.increment config not set!');
-        }
-
-        grunt.task.run('bump:' + increment);
-    });
+    ]);
 };
