@@ -146,24 +146,6 @@ module.exports = function(grunt) {
             }
         },
 
-        groc: {
-            options: {
-                github: false,
-                out: config.files.docs,
-                silent: true,
-                strip: 'src/'
-            },
-            local: {
-                src: config.files.src
-            },
-            github: {
-                options: {
-                    github: true
-                },
-                src: config.files.src
-            }
-        },
-
         preprocess: {
             bundle: {
                 src: config.files.src,
@@ -229,8 +211,7 @@ module.exports = function(grunt) {
         'concat',
         'uglify',
         'bump:prompt',
-        'bowerRelease',
-        'groc:github'
+        'bowerRelease'
     ]);
     grunt.registerTask('local:publish', 'Pack files up into a locally testable version. Same as publish, but without the actual bumping and publishing.', [
         'clean:lib',
