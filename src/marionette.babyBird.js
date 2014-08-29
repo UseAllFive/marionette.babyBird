@@ -25,6 +25,9 @@
     // `&nbsp;` instead of ` `.
     var ORPHAN_REPLACEMENT_CHARACTER = String.fromCharCode(160);
 
+    // Save the function we use to convert structures to objects.
+    var convertToObject;
+
     // Save the original `Marionette.Renderer.render`  function so we can call
     // it later.
     var originalRender = Marionette.Renderer.render;
@@ -192,10 +195,18 @@
         return result;
     }
 
+    // For Marionette.js >= v2.1, there is a `serializeModel` function used
+    // to serialize the model data. It used to use `toJSON`, this is better.
+    if (Marionette.View.prototype.serializeModel) {
+        Marionette.View.prototype.serializeModel = function(model) {
+            return convertToObject(model.attributes);
+        };
+    }
+
     // ## convertToObject
-    // Convert deeply nexted models and collections into a generic javascript
-    // object.
-    function convertToObject(data) {
+    // Convert deeply nexted models and collections into a generic
+    // javascript object.
+    convertToObject = function convertToObject(data) {
         var id;
 
         if (data instanceof Backbone.Collection) {
