@@ -252,7 +252,7 @@
         }, this);
 
         return data;
-    }
+    };
 
     return Marionette;
 }));
